@@ -46,7 +46,7 @@ public class App {
 
 		// the object 256 inputs 64 hidden 256 outputs 
 		Backpropagation bp = new Backpropagation(256,64,256);
-		/* THE WORKING WITH NO RANDOM 
+	
 		for (int iterations = 0; iterations < Constants.ITERATIONS; iterations++) {
 
 			for (int i = 0; i < datasets.size(); i++) {
@@ -69,9 +69,6 @@ public class App {
 		for (int i = 0; i < trainingResults.size(); i++) {
 			trainingResults.set(i, af.dinormalize(trainingResults.get(i)));
 		}
-	//	System.out.println("the training results are just fine ");
-
-
 
 		//second approach
 		// first ill turn the the training set from double to int
@@ -81,7 +78,6 @@ public class App {
 
 		}
 
-      // System.out.println("final output is legit");
 
 	     outPut = rw.convertToFullPic(finalOutput);
 
@@ -89,51 +85,7 @@ public class App {
 		rw.writeGrayScale("check.ppm", check);
 		rw.writeGrayScale("Final Output 1000 iterations.ppm", outPut);
 		System.out.println("finished writing EVERYTHING");
-		 */
-		for (int i = 0; i < datasets.size(); i++) {
-		trainingResults.add(i, bp.run(datasets.get(i)));
-		}
-     int random = (int) (Math.random()*((1023)+1));
-		for (int iterations = 0; iterations < Constants.ITERATIONS; iterations++) {
-
-			for (int i = 0; i < datasets.size(); i++) {
-				//	trainingResults.add(bp.run(datasets.get(i)));// i'm sending every pixel original input i'll get back the output after compression 
-				if(trainingResults.size()<=1023) {
-					trainingResults.add(random, bp.run(datasets.get(random)));
-				}
-				else {
-					trainingResults.set(i,bp.run(datasets.get(random)));
-				}
-				bp.train(trainingResults.get(random),datasets.get(random), Constants.LEARNING_RATE,Constants.MOMENTUM);// i'll send that output and the original input for correction 
-
-			}
-			if(iterations%100 ==0)
-			System.out.println(iterations);
-
-		}	
-
-		// converting into integers and multiplying by 256 
-				for (int i = 0; i < trainingResults.size(); i++) {
-					trainingResults.set(i, af.dinormalize(trainingResults.get(i)));
-				}
-			//	System.out.println("the training results are just fine ");
-
-
-
-				//second approach
-				// first ill turn the the training set from double to int
-
-				for (int i = 0; i < trainingResults.size(); i++) {   
-					finalOutput.add(i,rw.matrixTurner(trainingResults.get(i)));
-
-				}
-		// result on random 
-
-	    	  outPut = rw.convertToFullPic(finalOutput);
-
-			int[][] check = rw.matrixTurner(trainingResults.get(0));
-			rw.writeGrayScale("check.ppm", check);
-			rw.writeGrayScale("Final Output 100,00000 random iterations.ppm", outPut);
-			System.out.println("finished writing EVERYTHING");
+		 
+		
 	}
 }
